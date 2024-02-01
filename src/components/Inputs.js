@@ -10,15 +10,28 @@ const Inputs = ({ setQuery, units, setUnits }) => {
     if (units !== selectedUnit) setUnits(selectedUnit);
   };
 
+  const handleSearch = () => {
+    if (city.trim() !== "") {
+      setQuery({ q: city });
+      setCity(""); // Resetting the city input field
+    }
+  };
+
   const handleSearchClick = () => {
-    if (city !== "") setQuery({ q: city });
+    handleSearch();
+  };
+
+  const handleEnterPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevents the default behavior of submitting a form
+      handleSearch();
+    }
   };
 
   const handleLocationClick = () => {
     if (navigator.geolocation) {
-      toast.info("Fetching users location.");
+      toast.info("Fetching user's location.");
       navigator.geolocation.getCurrentPosition((position) => {
-        //toast.success("Location fetched!");
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
 
@@ -36,6 +49,7 @@ const Inputs = ({ setQuery, units, setUnits }) => {
         <input
           value={city}
           onChange={(e) => setCity(e.currentTarget.value)}
+          onKeyPress={handleEnterPress}
           type="text"
           placeholder="Search for city...."
           className="text-xl font-light p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase"
