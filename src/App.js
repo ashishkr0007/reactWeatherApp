@@ -17,16 +17,23 @@ function App() {
 
   useEffect(() => {
     const fetchWeather = async () => {
-      // const message = query.q ? query.q : "current location.";
+      try {
+        const data = await getFormattedWeatherData({ ...query, units });
 
-      //toast.info("Fetching weather for " + message);
+        // Check if the response contains an error
+        if (data.cod && data.cod !== "200") {
+          toast.error(`Error: ${data.message}`);
+          return;
+        }
 
-      await getFormattedWeatherData({ ...query, units }).then((data) => {
         toast.success(
           `Successfully fetched weather for ${data.name}, ${data.country}.`
         );
         setWeather(data);
-      });
+      } catch (error) {
+        toast.error("Entered City Name is Wrong");
+        //console.error(error);
+      }
     };
 
     fetchWeather();
