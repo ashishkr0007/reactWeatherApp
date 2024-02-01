@@ -75,14 +75,14 @@ export const TemperatureAndDetails = ({
 
         <UilArrowUp />
         <p className="font-light">
-          High:{" "}
+          Max:{" "}
           <span className="font-medium ml-1">{`${temp_max.toFixed()}°`}</span>
         </p>
         <p className="font-light">|</p>
 
         <UilArrowDown />
         <p className="font-light">
-          Low:{" "}
+          Min:{" "}
           <span className="font-medium ml-1">{`${temp_min.toFixed()}°`}</span>
         </p>
       </div>
